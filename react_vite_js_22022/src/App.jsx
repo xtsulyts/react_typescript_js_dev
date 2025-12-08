@@ -17,6 +17,7 @@ import { useCarrito } from "./contex/CarritoContexto.jsx";
 import { useUsuario } from "./contex/UsuarioContexto.jsx";
 import AdminPages from "./pages/AdminPages.jsx";
 import ComprasPages from "./pages/ComprasPages.jsx";
+import { RegistroUsuarioPages } from "./pages/RegistroUsuarioPages.jsx";
 
 function App() {
   const { carrito, handleAgregarCarrito, productos, loading } =
@@ -72,6 +73,7 @@ function App() {
             </RutaProtegida>
           }
         />
+        <Route path="registro" element={<RegistroUsuarioPages/>}/>
       </Routes>
     </Router>
   );
