@@ -255,7 +255,7 @@ const login = useCallback(async (credentials) => {
       
       // 4. Redirigir al login
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = '/';
       }, 500);
       
       return true;
@@ -274,7 +274,7 @@ const login = useCallback(async (credentials) => {
       });
       
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = '/';
       }, 500);
       
       return true;
