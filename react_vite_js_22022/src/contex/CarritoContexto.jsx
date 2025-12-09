@@ -64,13 +64,15 @@ export const CarritoProvider = ({ children }) => {
       setLoading(true);
       setError(null);
   
+      
       const [imagesResponse, productosResponse] = await Promise.all([
-        fetch("https://api.pexels.com/v1/search?query=sneakers+shoes&per_page=80&orientation=landscape&size=medium", {
-          headers: { Authorization: API_KEY },
-        }),
-        fetch(MOCKAPI_URL),
+          // Llamar a la función serverless en Netlify
+          fetch(`/.netlify/functions/pexels-proxy?query=sneakers+shoes&per_page=80&orientation=landscape&size=medium`),
+          fetch(MOCKAPI_URL, {
+              mode: 'cors'
+          }),
       ]);
-  
+        
       if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
       if (!productosResponse.ok) throw new Error("Error en API de productos");
   
