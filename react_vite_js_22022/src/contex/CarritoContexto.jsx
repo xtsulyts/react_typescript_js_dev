@@ -105,7 +105,7 @@ export const CarritoProvider = ({ children }) => {
 }, []); // <-- Aquí solo debe haber un cierre del useEffect
 
     useEffect(() => {
-    console.log("Productos actualizados:", productos);
+    //console.log("Productos actualizados:", productos);
   }, [productos]);
 
 

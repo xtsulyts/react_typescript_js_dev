@@ -13,7 +13,6 @@ import { useUsuario } from "../contex/UsuarioContexto";
  * @returns {JSX.Element} - Elemento JSX que representa el producto
  */
 const Productos = ({ producto }) => {
-  console.log(producto)
   const navigate = useNavigate();
   const { handleAgregarCarrito } = useCarrito();
   const {usuario} = useUsuario()

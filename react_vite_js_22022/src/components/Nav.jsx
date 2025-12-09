@@ -2,19 +2,20 @@ import { useState } from "react";
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrito } from "../contex/CarritoContexto";
+import { useUsuario } from "../contex/UsuarioContexto";
 
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { precioTotal } = useCarrito();
+  const { usuario, tieneRol } = useUsuario();
   
   const menuItems = [
     { name: "Inicio", path: "/" },
     { name: "Productos", path: "/productos" },
     { name: "Compras", path: "/compras" },
     { name: "Contacto", path: "/contacto" },
-    // { name: "Usuarios", path: "/usuarios" },
     { name: "Administracion", path: "/administracion" },
   ];
 

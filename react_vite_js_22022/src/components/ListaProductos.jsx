@@ -8,13 +8,7 @@ import { useCarrito } from "../contex/CarritoContexto";
 const ListaProductos = () => {
 
 const { productos } = useCarrito()
-console.log(productos)
   
-  // const { productos } = useCarrito();
-  // console.log(productos);
-
-
-
   return (
     
       <div className="galleryContainer">
