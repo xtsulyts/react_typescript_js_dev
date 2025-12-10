@@ -91,10 +91,8 @@ const RegistroUsuarios = () => {
         rol: 3
       };
       
-      console.log('Enviando datos:', userData);
-      
-      // 🔴 CORREGIDO: Agregar http:// al inicio de la URL
-      const API_URL = 'http://127.0.0.1:3000/api/v1/usuarios/crear-usuario';
+      //console.log('Enviando datos:', userData);
+      const API_URL = 'https://nodejs-25258.onrender.com/api/v1/usuarios/crear-usuario';
       
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -116,7 +114,7 @@ const RegistroUsuarios = () => {
       if (responseText && responseText.trim() !== '') {
         try {
           data = JSON.parse(responseText);
-          console.log('Datos parseados:', data);
+          //console.log('Datos parseados:', data);
         } catch (parseError) {
           console.error('Error parsing JSON:', parseError);
           console.error('Texto que causó el error:', responseText);
