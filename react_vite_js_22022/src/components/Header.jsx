@@ -45,8 +45,8 @@ const Header = () => {
                 >
                   {usuario?.image ? (
                     <img
-                      src={usuario.image}
-                      alt={usuario.username}
+                      src={usuario.imagen}
+                      alt={usuario.nombre}
                       className="w-6 h-6 rounded-full object-cover mr-2"
                       onError={(e) => {
                         e.target.onerror = null;
@@ -58,7 +58,7 @@ const Header = () => {
                       <span className="text-xs text-gray-600">?</span>
                     </div>
                   )}
-                  <span className="ml-1">{usuario.username}</span>
+                  <span className="ml-1">{usuario.nombre}</span>
                 </div>
 
                 {/* Menú desplegable - se activa solo por click */}

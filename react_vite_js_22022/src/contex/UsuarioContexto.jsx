@@ -67,8 +67,8 @@ const login = useCallback(async (credentials) => {
       throw new Error('Email y contraseña requeridos');
     }
 
-    console.log('📤 Enviando credenciales a:', LOGIN_URL);
-    console.log('📤 Datos enviados:', credentials); // Para debug
+    //console.log('📤 Enviando credenciales a:', LOGIN_URL);
+    //console.log('📤 Datos enviados:', credentials); // Para debug
     
     const response = await fetch(LOGIN_URL, {
       method: 'POST',
@@ -83,7 +83,7 @@ const login = useCallback(async (credentials) => {
 
     // Manejar respuesta
     const responseText = await response.text();
-    console.log('📥 Respuesta del servidor:', responseText);
+    //console.log('📥 Respuesta del servidor:', responseText);
     
     let data = {};
     
