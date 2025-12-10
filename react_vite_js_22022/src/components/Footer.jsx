@@ -13,7 +13,7 @@ const Footer = () => {
     { name: 'Inicio', path: '/' },
     { name: 'Productos', path: '/productos' },
     { name: 'Contacto', path: '/contacto' },
-    { name: 'Usuarios de prueba', path: '/usuarios' },  
+    //{ name: 'Usuarios de prueba', path: '/usuarios' },  
     { name: 'Login', path: '/login' },
     // { name: 'Administracion', path: '/administracion' },
     // { name: 'Documentacion', path: '/documentacion' },
