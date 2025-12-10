@@ -43,7 +43,7 @@ const CarruselOfertas = ({
     // Crear ofertas basadas en los productos reales
     const nuevasOfertas = productosParaOfertas.map((producto, index) => ({
       id: producto.id || `producto-${index}`,
-      imagen: producto.imagen || `https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=${index}`,
+      imagen: producto.imagen || `https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80=${index}`,
       titulo: producto.nombre || `Producto ${index + 1}`,
       descripcion: producto.descripcion ? 
         `${producto.descripcion.substring(0, 60)}... ¡Precio especial!` : 

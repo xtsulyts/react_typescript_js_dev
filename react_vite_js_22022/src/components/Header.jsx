@@ -24,7 +24,7 @@ const Header = () => {
           {/* Logo y título */}
           <div className="header-brand">
             {<FaShopify className="header-logo" />}
-            <h1 className="header-titulo">E-Shop Shoes</h1>
+            <h1 className="header-titulo">E-Shop Tech</h1>
           </div>
 
           {/* <div className="flex items-center bg-indigo-50 rounded-full px-4 py-2">
