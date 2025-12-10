@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 
-const MOCKAPI_URL = "https://67f5e9af913986b16fa5e489.mockapi.io/api/products"
+const MOCKAPI_URL = "https://nodejs-25258.onrender.com/api/v1/productos"
 
 /**
  * Contexto para manejar el estado global del carrito de compras
