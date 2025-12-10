@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
-//const MOCKAPI_URL = "https://nodejs-25258.onrender.com/api/v1/productos"
-const MOCKAPI_URL = "http://localhost:3000/api/v1/productos"
+const API_NODE_25258 = "https://nodejs-25258.onrender.com/api/v1/productos"
+//const API_NODE_25258 = "http://localhost:3000/api/v1/productos"
 
 
 /**
@@ -63,7 +63,7 @@ export const CarritoProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(MOCKAPI_URL, {
+      const response = await fetch(API_NODE_25258, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
