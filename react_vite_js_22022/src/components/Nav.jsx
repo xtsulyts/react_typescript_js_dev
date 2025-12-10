@@ -16,7 +16,7 @@ const Nav = () => {
     { name: "Productos", path: "/productos" },
     { name: "Compras", path: "/compras" },
     { name: "Contacto", path: "/contacto" },
-    { name: "Administracion", path: "/administracion" },
+    //{ name: "Administracion", path: "/administracion" },
   ];
 
   return (
