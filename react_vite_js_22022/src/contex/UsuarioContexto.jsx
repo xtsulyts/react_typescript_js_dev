@@ -11,7 +11,7 @@ export const UsuarioProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   // URLs de la API
-  const API_BASE = 'https://nodejs-25258.onrender.com/api/v1/usuarios';
+  const API_BASE = 'http://localhost:3000/api/v1/usuarios';
   const LOGIN_URL = `${API_BASE}/login`;
   const LOGOUT_URL = `${API_BASE}/logout`;
 

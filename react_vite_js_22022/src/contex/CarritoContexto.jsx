@@ -1,9 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-//import { RingLoader } from 'react-spinners';
 
-const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
+//const MOCKAPI_URL = "https://nodejs-25258.onrender.com/api/v1/productos"
+const MOCKAPI_URL = "http://localhost:3000/api/v1/productos"
 
-const MOCKAPI_URL = "https://nodejs-25258.onrender.com/api/v1/productos"
 
 /**
  * Contexto para manejar el estado global del carrito de compras
@@ -25,7 +24,7 @@ export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   
   // Estado para todos los productos disponibles
-  const [productos, setProductos] = useState([]);
+  const [ productos, setProductos] = useState([]);
   
   // Estado de carga
   const [loading, setLoading] = useState(true);
@@ -36,18 +35,15 @@ export const CarritoProvider = ({ children }) => {
   // Estado para las imágenes de productos
   const [imagenes, setImagenes] = useState([]);
   
- 
   // URL para el loader de carga
   const LOADER_URL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
   /**
-   * Efecto para cargar datos al montar el componente
-   * Realiza peticiones a:
-   * - API de Pexels para imágenes de productos
-   * - MockAPI para datos de productos
+   * Función hash para generar un índice estable a partir de un string (ID)
+   * @param {string} str - String a hashear (ID del producto)
+   * @param {number} max - Máximo valor para el hash
+   * @returns {number} - Hash resultante
    */
-  useEffect(() => {
-  // Función hash mejorada para generar un índice estable a partir de un string (ID)
   function hashId(str, max) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -58,58 +54,98 @@ export const CarritoProvider = ({ children }) => {
     return Math.abs(hash) % max;
   }
 
-  // Fetch inicial de datos
-  const fetchData = async () => {
+  /**
+   * Obtiene productos desde tu API
+   * @returns {Promise<Array>} - Array de productos transformados
+   */
+  const fetchProductos = async () => {
     try {
       setLoading(true);
       setError(null);
-  
       
-      const [imagesResponse, productosResponse] = await Promise.all([
-          // Llamar a la función serverless en Netlify
-          fetch(`/.netlify/functions/pexels-proxy?query=sneakers+shoes&per_page=80&orientation=landscape&size=medium`),
-          fetch(MOCKAPI_URL, {
-              mode: 'cors'
-          }),
-      ]);
-        
-      if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
-      if (!productosResponse.ok) throw new Error("Error en API de productos");
-  
-      const [imagesData, productosData] = await Promise.all([
-        imagesResponse.json(),
-        productosResponse.json(),
-      ]);
-  
-      setImagenes(imagesData.photos);
-  
-      // Combinar productos con sus imágenes usando hashId para asignación consistente
-      const combinedData = productosData.map(producto => {
-        // Usamos el ID del producto para obtener siempre la misma imagen
-        const imageIndex = hashId(producto.id.toString(), imagesData.photos.length);
-        return {
-          ...producto,
-          imagen: imagesData.photos[imageIndex]?.src.medium || 
-                 "https://via.placeholder.com/300",
-        };
+      const response = await fetch(MOCKAPI_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors'
       });
-  
-      setProductos(combinedData);
+      
+      if (!response.ok) {
+        throw new Error(`Error en la API: ${response.status} ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      
+      // Verifica la estructura de respuesta de tu API
+      if (result.success && result.data) {
+        // Transforma los datos para tu aplicación
+        const productosTransformados = result.data.map(producto => ({
+          id: producto.id,
+          nombre: producto.nombre,
+          precio: producto.precio,
+          descripcion: producto.descripcion,
+          categoria: producto.categoria,
+          subcategoria: producto.subcategoria,
+          marca: producto.marca,
+          estado: producto.Estado,
+          caracteristicas: producto.Caracteristicas,
+          especificaciones: producto.Especificaciones,
+          fechaCreacion: producto["Fecha de creacion"],
+          // Asigna una imagen usando hashId si hay imágenes disponibles
+          imagen: imagenes.length > 0 ? 
+            imagenes[hashId(producto.id, imagenes.length)]?.src?.medium || '' : ''
+        }));
+        
+        setProductos(productosTransformados);
+        return productosTransformados;
+      } else {
+        throw new Error(result.message || 'Formato de respuesta incorrecto');
+      }
+      
     } catch (err) {
-      console.error("Error:", err);
-      setError(err.message);
+      console.error('Error al obtener productos:', err);
+      setError(err.message || 'Error al cargar los productos');
+      return [];
     } finally {
       setLoading(false);
     }
   };
-  
-  fetchData();
-}, []); // <-- Aquí solo debe haber un cierre del useEffect
 
-    useEffect(() => {
-    //console.log("Productos actualizados:", productos);
-  }, [productos]);
+  /**
+   * Efecto para cargar datos al montar el componente
+   * Realiza peticiones a la API de productos y opcionalmente a imágenes
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Solo cargar productos por ahora (las imágenes están comentadas)
+        await fetchProductos();
+        
+        // Si necesitas cargar imágenes más adelante, puedes descomentar esto:
+        /*
+        const imagesResponse = await fetch("https://api.pexels.com/v1/search?query=electronics&per_page=50", {
+          headers: { Authorization: 'TU_API_KEY_AQUI' },
+        });
+        
+        if (imagesResponse.ok) {
+          const imagesData = await imagesResponse.json();
+          setImagenes(imagesData.photos || []);
+        }
+        */
+        
+      } catch (err) {
+        setError('Error al cargar los datos iniciales: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchData();
+  }, []);
 
   /**
    * Agrega un producto al carrito o actualiza su cantidad si ya existe
@@ -191,6 +227,7 @@ export const CarritoProvider = ({ children }) => {
     eliminarDelCarrito,
     actualizarCantidad,
     vaciarCarrito,
+    fetchProductos, // Nueva función agregada
     setProductos,
     setError,
   };
