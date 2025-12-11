@@ -78,36 +78,39 @@ const Carrito = ({ carritoItems }) => {
 
 
 
-  return (
+return (
     <div className="fixed inset-0 z-50 bg-white flex justify-center items-center">
-      <div className="w-full max-w-2xl h-[calc(100vh-8rem)] flex flex-col shadow-xl">
-        <div className="p-4 border-b flex justify-between items-center bg-gray-50">
-          <h2 className="text-2xl font-bold text-gray-900">Tu Carrito</h2>
+      <div className="w-full max-w-2xl h-[calc(100vh-2rem)] sm:h-[calc(100vh-4rem)] md:h-[calc(100vh-8rem)] flex flex-col shadow-xl mx-2 sm:mx-4 md:mx-6">
+        {/* Header del modal */}
+        <div className="p-3 sm:p-4 border-b flex justify-between items-center bg-gray-50">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Tu Carrito</h2>
           <button
             onClick={() => navigate("/productos")}
-            className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+            className="p-1.5 sm:p-2 rounded-full hover:bg-gray-200 transition-colors"
           >
-            <XMarkIcon className="h-6 w-6 text-gray-500" />
+            <XMarkIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500" />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 sm:px-6">
+        {/* Contenido del carrito */}
+        <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-6">
           {carritoItems.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center py-12">
-              <ShoppingBagIcon className="h-24 w-24 text-gray-300 mb-6" />
-              <p className="text-gray-500 text-xl mb-8">Tu carrito está vacío</p>
+            <div className="h-full flex flex-col items-center justify-center py-8 sm:py-12">
+              <ShoppingBagIcon className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 text-gray-300 mb-4 sm:mb-6" />
+              <p className="text-gray-500 text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-center px-4">Tu carrito está vacío</p>
               <button
                 onClick={() => navigate("/productos")}
-                className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="px-4 py-2.5 sm:px-5 sm:py-3 md:px-6 md:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm sm:text-base"
               >
                 Explorar productos
               </button>
             </div>
           ) : (
-            <ul className="divide-y divide-gray-200 py-4">
+            <ul className="divide-y divide-gray-200 py-3 sm:py-4">
               {carritoItems.filter(item => item.cantidad > 0).map((item) => (
-                <li key={item.id} className="py-6 flex">
-                  <div className="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden bg-gray-100">
+                <li key={item.id} className="py-4 sm:py-6 flex">
+                  {/* Imagen del producto */}
+                  <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-md overflow-hidden bg-gray-100">
                     {item.imagen ? (
                       <img 
                         src={item.imagen} 
@@ -116,45 +119,47 @@ const Carrito = ({ carritoItems }) => {
                         onClick={() => navigate(`/productos/${item.id}`)}
                       />
                     ) : (
-                      <ShoppingBagIcon className="w-full h-full text-gray-400 p-3" />
+                      <ShoppingBagIcon className="w-full h-full text-gray-400 p-2 sm:p-3" />
                     )}
                   </div>
 
-                  <div className="ml-4 flex-1 flex flex-col">
+                  {/* Detalles del producto */}
+                  <div className="ml-3 sm:ml-4 flex-1 flex flex-col">
                     <div className="flex justify-between">
                       <h3 
-                        className="text-lg font-medium text-gray-900 hover:text-indigo-600 cursor-pointer"
+                        className="text-sm sm:text-base md:text-lg font-medium text-gray-900 hover:text-indigo-600 cursor-pointer line-clamp-1"
                         onClick={() => navigate(`/productos/${item.id}`)}
                       >
                         {item.nombre}
                       </h3>
-                      <p className="text-lg font-semibold text-green-600">
+                      <p className="text-sm sm:text-base md:text-lg font-semibold text-green-600 ml-2">
                         ${(item.precio * item.cantidad).toFixed(2)}
                       </p>
                     </div>
-                    <p className="text-sm text-gray-500">${item.precio.toFixed(2)} c/u</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">${item.precio.toFixed(2)} c/u</p>
                     
-                    <div className="flex items-center mt-3">
+                    {/* Controles de cantidad */}
+                    <div className="flex items-center mt-2 sm:mt-3">
                       <button 
                         onClick={() => decrementarCantidad(item.id)}
-                        className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-l-md hover:bg-gray-200 transition-colors"
+                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 flex items-center justify-center bg-gray-100 rounded-l-md hover:bg-gray-200 transition-colors text-sm"
                       >
                         -
                       </button>
-                      <span className="w-10 text-center border-t border-b border-gray-100">
+                      <span className="w-8 sm:w-9 md:w-10 text-center border-t border-b border-gray-100 text-sm sm:text-base">
                         {item.cantidad}
                       </span>
                       <button 
                         onClick={() => incrementarCantidad(item.id)}
-                        className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-r-md hover:bg-gray-200 transition-colors"
+                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 flex items-center justify-center bg-gray-100 rounded-r-md hover:bg-gray-200 transition-colors text-sm"
                       >
                         +
                       </button>
                       <button 
                         onClick={() => eliminarDelCarrito(item.id)}
-                        className="ml-4 p-1 text-gray-500 hover:text-red-500 transition-colors"
+                        className="ml-2 sm:ml-3 md:ml-4 p-1 text-gray-500 hover:text-red-500 transition-colors"
                       >
-                        <TrashIcon className="h-5 w-5" />
+                        <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
                     </div>
                   </div>
@@ -164,22 +169,23 @@ const Carrito = ({ carritoItems }) => {
           )}
         </div>
 
+        {/* Footer del modal (solo si hay items) */}
         {carritoItems.length > 0 && (
-          <div className="p-4 border-t border-gray-200 bg-gray-50">
-            <div className="flex justify-between text-lg font-semibold mb-3">
+          <div className="p-3 sm:p-4 border-t border-gray-200 bg-gray-50">
+            <div className="flex justify-between text-base sm:text-lg font-semibold mb-2 sm:mb-3">
               <span>Subtotal</span>
               <span>${importeCompra.toFixed(2)}</span>
             </div>
-            <p className="text-sm text-gray-500 mb-4">Envío e impuestos calculados al finalizar</p>
-            <div className="space-y-3">
+            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">Envío e impuestos calculados al finalizar</p>
+            <div className="space-y-2 sm:space-y-3">
               <button
                 onClick={handlePagar}
-                className="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                className="w-full py-2.5 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center text-sm sm:text-base"
               >
                 <span>Pagar ahora</span>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 ml-2" 
+                  className="h-4 w-4 sm:h-5 sm:w-5 ml-1.5 sm:ml-2" 
                   viewBox="0 0 20 20" 
                   fill="currentColor"
                 >
@@ -188,7 +194,7 @@ const Carrito = ({ carritoItems }) => {
               </button>
               <button
                 onClick={() => navigate("/productos")}
-                className="w-full py-3 bg-white text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="w-full py-2.5 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm sm:text-base"
               >
                 Seguir comprando
               </button>
