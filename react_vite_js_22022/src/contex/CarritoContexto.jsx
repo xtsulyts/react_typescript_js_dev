@@ -190,7 +190,6 @@ export const CarritoProvider = ({ children }) => {
   const value = {
     carrito,
     productos,
-    imagenes,
     loading,
     error,
     LOADER_URL,
