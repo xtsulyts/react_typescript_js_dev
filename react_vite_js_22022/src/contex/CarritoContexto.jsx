@@ -32,27 +32,10 @@ export const CarritoProvider = ({ children }) => {
   // Manejo de errores
   const [error, setError] = useState(null);
   
-  // Estado para las imágenes de productos
-  const [imagenes, setImagenes] = useState([]);
   
   // URL para el loader de carga
   const LOADER_URL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
-  /**
-   * Función hash para generar un índice estable a partir de un string (ID)
-   * @param {string} str - String a hashear (ID del producto)
-   * @param {number} max - Máximo valor para el hash
-   * @returns {number} - Hash resultante
-   */
-  function hashId(str, max) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash = hash & hash; // Convierte a entero de 32 bits
-    }
-    return Math.abs(hash) % max;
-  }
 
   /**
    * Obtiene productos desde tu API
@@ -92,9 +75,10 @@ export const CarritoProvider = ({ children }) => {
           caracteristicas: producto.Caracteristicas,
           especificaciones: producto.Especificaciones,
           fechaCreacion: producto["Fecha de creacion"],
+          imagen: producto.imagen
           // Asigna una imagen usando hashId si hay imágenes disponibles
-          imagen: imagenes.length > 0 ? 
-            imagenes[hashId(producto.id, imagenes.length)]?.src?.medium || '' : ''
+          // imagen: imagenes.length > 0 ? 
+          //   imagenes[hashId(producto.id, imagenes.length)]?.src?.medium || '' : ''
         }));
         
         setProductos(productosTransformados);
@@ -122,20 +106,9 @@ export const CarritoProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         
-        // Solo cargar productos por ahora (las imágenes están comentadas)
         await fetchProductos();
         
-        // Si necesitas cargar imágenes más adelante, puedes descomentar esto:
-        /*
-        const imagesResponse = await fetch("https://api.pexels.com/v1/search?query=electronics&per_page=50", {
-          headers: { Authorization: 'TU_API_KEY_AQUI' },
-        });
-        
-        if (imagesResponse.ok) {
-          const imagesData = await imagesResponse.json();
-          setImagenes(imagesData.photos || []);
-        }
-        */
+ 
         
       } catch (err) {
         setError('Error al cargar los datos iniciales: ' + err.message);
