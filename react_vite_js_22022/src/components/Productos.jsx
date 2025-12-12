@@ -51,8 +51,8 @@ const Productos = ({ producto }) => {
   const nombreProducto = producto.nombre || "Producto sin nombre";
   const descripcion = producto.descripcion || "";
   const precio = producto.precio || 0;
-  const estado = producto.Estado !== false; // Convertir a booleano (true por defecto si no existe)
-  const imagen = producto.imagen || ""; // Tu API no tiene imágenes por ahora
+  const estado = producto.Estado !== false; 
+  const imagen = producto.imagen || ""; 
   const marca = producto.marca || "";
   const categoria = producto.categoria || "";
   const subcategoria = producto.subcategoria || "";
